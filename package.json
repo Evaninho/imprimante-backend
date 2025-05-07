@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "bootstrap-icons": "^1.11.3",
+    "chrome-paths": "^1.0.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "puppeteer": "^24.6.0"
+  },
+  "name": "imprimante-scrap",
+  "version": "1.0.0",
+  "main": "infoPrint.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "bin": "infoPrint.js",
+  "pkg": {
+    "scripts": "infoPrint.js",
+    "targets": [
+      "node16-win-x64"
+    ]
+  }
+}

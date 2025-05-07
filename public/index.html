@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Données de l'imprimante</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        
+        @font-face {
+            font-family: 'AvenirLTStd-Black';
+
+            src: url('font/AvenirLTStd-Black.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'AvenirLTStd-Medium';
+            src: url('font/AvenirLTStd-Medium.otf') format('opentype');
+
+        }
+
+        body,
+        html {
+            position: relative;
+            background-position: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f3f0f7;
+            color:#212529;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        button {
+            background-color: #9c27b0;
+            color: #FFF;
+            border-radius: 0.6em;
+            padding: 10px 20px;
+            border: none;
+            transform: scale(1);
+            transition: 0.2s;
+            cursor: pointer;
+            font-weight:bold ;
+        }
+        button:hover {
+            background-color: rgb(127, 10, 88);
+            transform: scale(1.04);
+            transition: 0.1s;
+        }
+        .background {
+            position: relative;
+            min-height: 100vh;
+            
+            overflow: hidden;
+            z-index: 9;
+            
+        }
+        /* .image-container img {
+            clip-path: polygon(10% 0, 80% 0, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0 80%, 0 20%);
+        } */
+        /* img{
+            min-height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            object-fit: cover;
+            background-repeat: no-repeat;
+            filter: blur(2px); 
+            z-index: 2; 
+        } */
+
+        h1 {
+            text-align: center;
+            font-size: 50px;
+            color: rgb(63,42,86);
+            font-family: AvenirLTStd-Black;
+            color:#4a235a ;
+
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 400;
+            font-family: AvenirLTStd-Medium;
+
+        }
+
+
+        table {
+            width: 75%;
+            border-collapse: collapse;
+            border-bottom:#e0e0e0;
+            margin: 20px auto;
+            border-radius: 1em;
+        }
+
+        th,
+        td {
+            min-width: 8%;
+            min-height: 8%;
+            border:0.8px solid #8182846e;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            /* background-color: #dadada; */
+            width: 5%;
+            background-color: 	#fdedff;
+            background-size: cover;
+            color: rgb(63,42,86);
+            font-size: 20px;
+        }
+
+        #form{
+            position:absolute;
+            top: 50vh;
+            right: 50vh;
+            display: none;
+            margin: auto;
+            z-index: 102;
+            background-color: #f3f0f7;
+        }
+        /* .animate__animated.animate__FadeInDown {
+        --animation-delay:0ms;
+        --animate-duration: 0.2s;
+        }
+        .animate__animated.animate__FadeOutDown {
+        --animation-delay:0ms;
+        --animate-duration: 0.2s;
+        } */
+        #form>input{
+            background-color:  #f4f0f4;
+            ;
+        }
+
+        #form>i{
+            position:absolute ;
+            top: 5px;
+            right: 10px;
+            color:red ; 
+            font-size: 30px; 
+            font-weight: 900pt;
+            transform: scale(1);
+            transition: 0.2s;
+        }
+        #form>i:hover{
+            color:rgb(161, 7, 7) ; 
+            transform: scale(1.1);
+            transition: 0.2s;
+        }
+
+        #cache{
+            width: 100%;
+            height: 100%;
+            min-width: 100vw;
+            min-height: 100vh;
+            filter: blur(2px);
+            background-color: rgba(60, 60, 60, 0.144);
+            display: none;
+            position: absolute;
+            inset: 0;
+            z-index: 101;
+        }
+
+        #loader{
+            
+            z-index: 100;
+            border: 4px rgba(255, 255, 255, 0)solid;
+            border-top:4px solid rgb(63,42,86);
+            border-bottom: 4px solid rgb(63,42,86);
+            border-radius: 50%;
+            height: 70px;
+            width: 70px;
+            margin: auto;
+            position: absolute;
+            inset: 0;
+            -webkit-animation: spin 1s linear infinite;
+            -o-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+            display: block;
+        }
+        #loaderText{
+            padding-top: 150px;
+            text-align: center;
+            z-index: 100;
+            margin: auto;
+            display: block;
+            color: rgb(63,42,86);
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        .row1{
+            background-color: 	#fff8fd;
+        }
+
+        .row2{
+            background-color: #fff4ff;
+        }
+
+        @keyframes spin{
+            0%{
+                transform: rotate(0deg);
+            }
+            100%{
+                transform: rotate(360deg); 
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="image-container">
+        <img src="images/1444x920_plusieurs-changements-sont-a-prevoir-sur-le-rer-cette-semaine.webp" alt="RER">
+    </div>
+     -->
+    <main class="background">
+        
+        <h1 class="mt-3 mb-3">Informations imprimantes</h1>
+        <div class="d-flex justify-content-between">
+            <button onclick="location.reload()" 
+                style="display:block; margin: 20px auto;">Actualiser les informations</button>
+
+            <button onclick="affichageForm()" 
+                style="display:block; margin: 20px auto;">Ajouter une imprimante</button>
+        </div>
+        <table id="tables-container">
+
+            <tr>
+                <th>Nom/Lieu</th>
+                <th>Périphérique</th>
+                <th>IP</th>
+                <th>Impressions en noir</th>
+                <th>Impressions couleur</th>
+                <th style="color:rgb(51, 212, 212);  ">Cyan</th>
+                <th style="color:rgb(215, 29, 215); ">Magenta</th>
+                <th style="color:rgb(255, 182, 18); ">Jaune</th>
+                <th style="color:black;  ">Noir</th>
+                <th>R2</th>
+                <th>R3</th>
+                <th>R4</th>
+                <th>R1</th>
+                <th>Bac à déchets</th>
+                <th>Four</th>
+            </tr>
+
+            <tbody id="table_ajout">
+
+            </tbody>
+        </table>
+        <div id="loader"> </div>
+        <p id="loaderText">Chargement des données ...</p>
+        <div id="form" class="container card w-50 ">
+            <h2 class="text-center form-label mt-3 mb-3">Ajouter une Imprimante</h2>
+            <i onclick="affichageForm()" class="bi bi-x"></i>
+            <div class="form-group">
+                <label class="card-text" for="nom">Entrez un nom de l'Imprimante</label>
+                <input type="text" class="form-control mb-3" id="nom" placeholder="Nom de l'imprimante"
+                    aria-label="Nom de l'imprimante">
+            </div>
+            <div class="form-group">
+                <label class="card-text" for="ip">Entrez une IP</label>
+                <input type="text" class="form-control mb-3" id="ip" placeholder="Adresse IP" aria-label="Adresse IP">
+            </div>
+            <button onclick="ajouterImprimante()" class="d-block mx-auto mb-3 mt-3">Envoyer</button>
+        </div>
+        <div id="cache" onclick="affichageForm()" class=""></div>
+    </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            loadDefaultPrinters();
+        });
+        //  ICI POUR CHANGER LES IPs 
+
+        let defaultIPs = [
+            '10.25.51.192',
+            '10.25.51.113',
+            '10.25.51.250',
+            // '10.25.51.17',
+            '10.25.51.187',
+            // '10.25.50.199',
+            '10.25.51.66',
+            '10.25.51.11',
+            '10.25.50.171',
+            '10.177.29.238',
+            // '10.177.24.200',
+            '10.25.50.249',
+            // '10.25.50.109',
+            // '10.25.50.162',
+            '10.25.51.164',
+            '10.25.51.39'
+            // '10.25.51.109',
+            // '10.25.51.183'
+
+        ];
+
+
+        //  ICI POUR CHANGER LES IPs et leur nom associé 
+
+        let ipToName = {
+            '10.25.51.192': 'RdC bat75 (BOT)',// HTTP
+            '10.25.51.113': '2eme Bat75 QSE',// HTTP
+            '10.25.51.250': '1er Bat MCF//UOMeca',// HTTP
+            // '10.25.51.17': '2eme Bat MCF//PC', // HTTPS
+            '10.25.51.187': '2eme PIVOS', // HTTP
+            // '10.25.50.199': '1er Bat PIVOS//CC', // HTTPS
+            '10.25.51.66': 'Répartition', //HTTP
+            '10.25.51.11': 'Verin', //HTTP
+            '10.25.50.171': 'LogAval(Pelops)', //HTTP NB
+            '10.177.29.238': '10.177.29.238', //HTTP NB
+            // '10.177.24.200': 'Dourdan', // Trouve Pas
+            '10.25.50.249': 'Mouvement', //HTTP
+            // '10.25.50.109': 'TEF', //HTTPS
+            // '10.25.50.162': 'Pheonix', //HTTPS
+            '10.25.51.164': 'Spie', //HTTP
+            '10.25.51.39': 'LogAval' //HTTP
+            // '10.25.51.109': 'IO', //HTTPS
+            // '10.25.51.183': 'Dépannage' //HTTPS
+        }; 
+        let toggleForm=false;
+        let form=document.getElementById('form');
+        let cache=document.getElementById('cache');
+        // function affichageForm(){
+        //     (toggleForm==true)?(cache.style.display='block',toggleForm=false, form.zIndex="12",form.classList.remove('animate__fadeIn'),form.classList.add('animate__fadeOut')):(cache.style.display='block',form.style.display='block',form.style.zIndex="10",toggleForm=true, form.classList.remove('animate__fadeOut'),form.classList.add('animate__fadeIn'));
+        // }
+        function affichageForm(){
+            if (toggleForm) {
+                cache.style.display = 'none'; 
+                form.style.display = 'none'; 
+
+                toggleForm = false;
+                // form.classList.remove('animate__fadeInDown');
+                // form.classList.add('animate__fadeOutDown');
+
+                // cache.classList.remove('animate__fadeInDown');
+                // cache.classList.add('animate__fadeOutDown');
+
+                
+                // form.addEventListener('animationend', function() {
+                //     form.style.display = 'none'; 
+                //     // form.classList.remove('animate__fadeOutDown'); 
+                //     toggleForm = false;
+                // }, { once: true });
+
+            } else {
+                cache.style.display = 'block'; 
+                form.style.display = 'block'; 
+
+                // form.classList.remove('animate__fadeOutDown');
+                // form.classList.add('animate__fadeInDown');
+
+                // cache.classList.remove('animate__fadeOutDown');
+                // cache.classList.add('animate__fadeInDown');
+
+                toggleForm = true; 
+            }
+        }
+        function ajouterImprimante() {
+            const nom = document.getElementById('nom').value;
+            const ip = document.getElementById('ip').value;
+
+            if (nom && ip) {
+                console.log("Imprimante ajoutée : ", nom, ip);
+                if (!defaultIPs.includes(ip)) {
+                    defaultIPs.push(ip);
+                    ipToName[ip] = nom;
+                    console.log("Imprimante ajoutée : ", nom, ip);
+                    console.log("Liste des IPs : ", defaultIPs);
+                    console.log("Associations IP-Nom : ", ipToName);
+                } else {
+                    alert("Cette IP est déjà utilisée pour une imprimante.");
+                }
+            } else {
+                alert("Veuillez remplir tous les champs.");
+            }
+        }
+        let laoder=document.getElementById('loader');
+        let laoderText=document.getElementById('loaderText');
+        let toggleRow=false;
+        const tableau=document.getElementById('tables-container')
+        const displayPrinterData = ({ ip, tabInfo, error}) => {
+            const table = document.getElementById('table_ajout');
+
+            const row = document.createElement('tr');
+            if (toggleRow) {
+                row.classList.remove('row2');
+                row.classList.add('row1');
+            }else{
+                row.classList.remove('row1');
+                row.classList.add('row2'); 
+            }
+            toggleRow = !toggleRow;
+            const cellName = document.createElement('td');
+            cellName.textContent = ipToName[ip] || ip;
+            row.appendChild(cellName);
+            for (let i = 0; i < 14; i++) {
+                const cell = document.createElement('td');
+                (tabInfo[i]=='1%')? (cell.style.backgroundColor ='#ffbbbb',cell.style.color ='#d4261d',cell.style.fontWeight='bold') : cell.style.color ='#212529';
+                cell.textContent = tabInfo ? (tabInfo[i] ?? '?') : 'X';
+
+                row.appendChild(cell);
+            };
+            
+            table.appendChild(row);
+            tableau.style.display='block';
+            laoder.style.display='none';
+            laoderText.style.display='none';
+        };
+
+        
+        async function loadDefaultPrinters() {
+  let response = await fetch(`http://10.5.179.114:3005/info?ips=${defaultIPs.join(',')}`);
+  let data = await response.json();
+
+  data.forEach(displayPrinterData); // ta fonction qui remplit le tableau
+  document.getElementById('loader').style.display = 'none';
+  document.getElementById('loaderText').style.display = 'none';
+}
+    </script>
+</body>
+
+</html>

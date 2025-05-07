@@ -1,0 +1,4 @@
+Comment ouvrir le fichier après avoir décompressé le .zip : 
+    - Executer le fichier imprimante-scrap.exe
+    - Ctrl + Click sur le lien afficher dans la console qui s'ouvre ou copier le lien (http://localhost:3000) et le mettre sur un navigateur
+    - Ensuite attendre l'affichage des données 
