@@ -1,5 +1,4 @@
 const puppeteer = require('puppeteer');
-const chromePaths = require('chrome-paths');
 const express = require('express');
 const cors = require('cors');
 
@@ -23,11 +22,7 @@ app.get('/info', async (req, res) => {
     return res.json([]);
   }
 
-  const browser = await puppeteer.launch({
-    executablePath: chromePaths.chrome,
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  });
+  const browser = await puppeteer.launch();
 
   const results = await Promise.all(
     ipList.map(async (ip) => {
