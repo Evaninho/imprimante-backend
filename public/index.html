@@ -418,7 +418,7 @@
 
         
         async function loadDefaultPrinters() {
-  let response = await fetch(`http://10.5.179.114:3005/info?ips=${defaultIPs.join(',')}`);
+  let response = await fetch(`http://localhost:3005/info?ips=${defaultIPs.join(',')}`);
   let data = await response.json();
 
   data.forEach(displayPrinterData); // ta fonction qui remplit le tableau

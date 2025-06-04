@@ -97,7 +97,7 @@ app.get('/info', async (req, res) => {
   res.json(results);
 });
 
-const host = '10.5.179.114';
+const host = '0.0.0.0';
 app.listen(port, host, () => {
-  console.log(`Serveur lancé sur : http://${host}:${port}`);
+  console.log(`Serveur lancé sur : http://localhost:${port}`);
 });
