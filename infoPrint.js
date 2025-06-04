@@ -22,9 +22,12 @@ app.get('/info', async (req, res) => {
     return res.json([]);
   }
 
+  console.log("test")
   const browser = await puppeteer.launch({
     executablePath: `C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe`
   });
+  
+  console.log('test2qs')
 
   const results = await Promise.all(
     ipList.map(async (ip) => {
