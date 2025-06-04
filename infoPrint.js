@@ -1,5 +1,4 @@
 const puppeteer = require('puppeteer');
-const chromePaths = require('chrome-paths');
 const express = require('express');
 const cors = require('cors');
 
